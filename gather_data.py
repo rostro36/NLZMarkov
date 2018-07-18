@@ -1,7 +1,12 @@
+'''
+kill all autocomplete
+'''
+
 import urllib3
 import io
 import re
 import os
+import html
 import urllib.parse as up
 
 query=''
@@ -24,8 +29,6 @@ for char in data:
         results+=char
 print('there are '+results+' results')
 
-
-#datas=re.split('<a class="teaser__link " href="',data)
 number_of_pages=int((int(results)-1)/10+1)                                      #instead of math.ceil
 for resultpage in range(1,number_of_pages+1):
     print(resultpage)
@@ -43,11 +46,15 @@ for resultpage in range(1,number_of_pages+1):
         print(resultpage,pageid,nextlink)
         site=http.request('GET',nextlink)
         sitedata=site.data.decode("utf-8")
+        sitedata=html.unescape(sitedata)
+
+        sitedata=re.split('<div class="leadtext">',sitedata)[1]
+        sitetext=re.split('</div>',sitedata)[0]
+        sitetext+="\n"
+
         sitedatas=re.split('<p class="text regwalled" itemprop="articleBody">',sitedata)
-        sitetext=''
         for text in sitedatas[1:]:
-            #text=re.sub('.*<p class="text regwalled" itemprop="articleBody">','',text,1,re.DOTALL)
-            sitetext+=text.split('</p>')[0]
+            sitetext+=up.unquote(text.split('</p>')[0])
             sitetext+=' '
         filename = os.getcwd()+"/NLZMarkov/"+query+"/"+str(resultpage).zfill(2)+str(pageid)+".txt"
         os.makedirs(os.path.dirname(filename), exist_ok=True)
