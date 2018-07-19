@@ -8,7 +8,7 @@ import re
 import os
 import html
 import urllib.parse as up
-
+#quai churchill leinenpflicht initiative==2 results
 query=''
 
 http=urllib3.PoolManager()
@@ -61,5 +61,5 @@ for resultpage in range(1,number_of_pages+1):
         with open(filename, "w") as f:
             f.write(sitetext)
         pageid+=1
-    print('###we have written to '+str(resultpage*10)+' of '+str(results))
-print('all done')
+    print('###we have written to '+str(min(results,resultpage*10))+' of '+str(results))
+print('gather done')
