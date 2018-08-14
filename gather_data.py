@@ -5,6 +5,8 @@ import os
 import html
 import urllib.parse as up
 
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)             #otherwise gives warnings I dont know how to fix.
+
 def gather(query,path):
     http=urllib3.PoolManager()
     URL='https://www.luzernerzeitung.ch/suche?form%5Bq%5D='+up.quote_plus(query)
@@ -42,8 +44,13 @@ def gather(query,path):
             sitedata=site.data.decode("utf-8")
             sitedata=html.unescape(sitedata)                                    #decode the article properly
 
-            sitedata=re.split('<div class="leadtext">',sitedata)[1]             #filter out the leadtext
-            sitetext=re.split('</div>',sitedata)[0]
+            sitedata=re.split('<div class="leadtext">',sitedata)
+            if len(sitedata)>=2:                                                #some sites dont have a leadtext
+                sitedata=sitedata[1]                                            #filter out the leadtext
+                sitetext=re.split('</div>',sitedata)[0]
+            else:
+                sitedata=sitedata[0]
+                sitetext=" "
             sitetext+="\n"
 
             sitedatas=re.split('<p class="text regwalled" itemprop="articleBody">',sitedata)#filter out the main text
@@ -52,9 +59,9 @@ def gather(query,path):
                 sitetext+=' '
             filename = path+str(resultpage).zfill(2)+str(pageid)+".txt"         #filename to save
             os.makedirs(os.path.dirname(filename), exist_ok=True)               #make the directory, if it doesn't already exist
-            with open(filename, "w") as f:                                      #write it
+            with open(filename, "w", encoding="utf-8") as f:                                      #write it
                 f.write(sitetext)
             pageid+=1
-            print('##we have written to '+str(min(int(results),resultpage*10))+' of '+results)
+        print('##we have downloaded '+str(min(int(results),resultpage*10))+' of '+results)
     print('#@gather done')
     return 0

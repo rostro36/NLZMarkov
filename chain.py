@@ -16,8 +16,10 @@ def mkchain(depths,dicts):
         #currstring now looks pretty bad
         curroutput=''
         for word in currstring[currchaindepth:]:                                #up to currchaindepth it is just start
-            curroutput+=word+' '
-        curroutput= curroutput[:-1]                                             #delete the last blank
+            if word[0].isalpha() or word[0].isdigit():
+                curroutput+=' '+word
+            else:                                                               #if it is only ,.;'
+                curroutput+=word
         sectionlists.append(curroutput)                                         #append sectionoutput to combination of others
         print('€@'+str(sectionit)+': '+curroutput)
     return sectionlists
