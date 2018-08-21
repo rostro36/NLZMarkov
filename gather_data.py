@@ -9,7 +9,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning
                         )  #otherwise gives warnings I dont know how to fix.
 
 
-def gather(query, path):
+def gather(query, path, bar):
     http = urllib3.PoolManager()
     URL = 'https://www.luzernerzeitung.ch/suche?form%5Bq%5D=' + up.quote_plus(
         query)
@@ -78,5 +78,12 @@ def gather(query, path):
             pageid += 1
         print('##we have downloaded ' +
               str(min(int(results), resultpage * 10)) + ' of ' + results)
+        #update progressbar in gui if given
+        if bar != None:
+            bar.setValue(
+                min(int(results), resultpage * 10) / int(results) * 100)
     print('#@gather done')
+    #update progressbar in gui if given
+    if bar != None:
+        bar.setValue(100)
     return 0

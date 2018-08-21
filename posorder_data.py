@@ -5,7 +5,7 @@ import treetaggerwrapper
 tagger = treetaggerwrapper.TreeTagger(TAGLANG='de')
 
 
-def order(depths, query, path):
+def posorder(depths, query, path, bar):
     dicts = [dict()] * len(
         depths
     )  #make dicts to store the possible choices given the previous words
@@ -47,7 +47,13 @@ def order(depths, query, path):
                     currdict[key].append(entry)
         if counter % 10 == 0:  #dont print for every file
             print('@#ordered ' + str(counter + 1) + ' of ' + str(allfiles + 1))
+            #update progressbar in gui if given
+            if bar != None:
+                bar.setValue((counter + 1) / (allfiles + 1) * 100)
         counter += 1
 
     print('@@ordering done')
+    #update progressbar in gui if given
+    if bar != None:
+        bar.setValue(100)
     return dicts
