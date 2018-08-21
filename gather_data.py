@@ -13,8 +13,14 @@ def gather(query, path, bar):
     http = urllib3.PoolManager()
     URL = 'https://www.luzernerzeitung.ch/suche?form%5Bq%5D=' + up.quote_plus(
         query)
-    r = http.request('GET', URL)  #get the actual site
+    #check if internet works as it should
+    try:
+        r = http.request('GET', URL)  #get the actual site
+    except Exception as ex:
+        print(ex)
+        return 2
     data = r.data.decode("utf-8")  #make it readable
+
     emptyflag = '<div class="searchresults__emptynotice">'
     if emptyflag in data:  #check if there is a result
         print('there are no results for your query')
@@ -34,8 +40,13 @@ def gather(query, path, bar):
         (int(results) - 1) / 10 +
         1)  #instead of math.ceil, determine how many sites of results there are
     for resultpage in range(1, number_of_pages + 1):
-        resultdata = http.request(
-            'GET', URL + '&page=' + str(resultpage))  #download the result page
+        try:
+            resultdata = http.request(
+                'GET',
+                URL + '&page=' + str(resultpage))  #download the result page
+        except Exception as ex:
+            print(ex)
+            return 2
         resultdata = resultdata.data.decode("utf-8")
         datas = re.split('<a class="teaser__link " href="', resultdata)
         pageid = 0
