@@ -12,3 +12,10 @@ Markov chain based on articles of the "Neue Luzerner Zeitung".
 * the gui is not robust, because it doesn't use multithreading
 * make custom errors for not being able to gather data.
 
+## Used libraries:
+* PyQt5
+* urllib3
+* urllib
+* nltk
+* treetagger(wrapper) and the german language package
+* standard python libraries (i think)
