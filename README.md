@@ -15,3 +15,5 @@ What possible to make better:
 the gui is not robust, because it doesn't use multithreading
 
 make custom errors for not being able to gather data.
+
+nicer readme
