@@ -96,6 +96,9 @@ class Feischter(QWidget):
 
     #the function for the PoS button
     def posfun(self):
+        #set the progressbar to 0
+        self.dprog.setValue(0)
+        self.oprog.setValue(0)
         #get the parameters from the user
         query = self.suchwortedit.text()
         sectiondepths = [
@@ -125,6 +128,9 @@ class Feischter(QWidget):
 
     #the function for the naive button
     def naivefun(self):
+        #set the progressbar to 0
+        self.dprog.setValue(0)
+        self.oprog.setValue(0)
         #get the parameters from the user
         query = self.suchwortedit.text()
         sectiondepths = [
