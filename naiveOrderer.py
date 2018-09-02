@@ -20,8 +20,8 @@ def orderNaive(depths, query, path, bar):
             currentDict = dicts[sectionsIterator]
             currentText = fileText[sectionsIterator]
             currentText = nltk.tokenize.word_tokenize(currentText)  #get words
-            currentText = ['£$'] * depth + currentText + [
-                '$£'
+            currentText = ['$START$'] * depth + currentText + [
+                '$END$'
             ]  #£$ are used as startsymbols, $£ is a stop signal
 
             for currentIterator in range(

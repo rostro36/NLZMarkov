@@ -1,6 +1,6 @@
 from wrapper import wrapGather, wrapChainNaive, wrapChainPOS, wrapOrderPOS, wrapOrderNaive
 
-query = 'trump'  #fill in your own query
+query = 'quai churchill leinenpflicht initiative'  #fill in your own query
 sectiondepths = [2, 3]  #[title,main]
 
 repetition = 3

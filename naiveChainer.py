@@ -9,14 +9,14 @@ def mkNaiveChain(depths, dicts):
         currentChaindepth = depths[sectionIterator]
         currentChain = dicts[
             sectionIterator]  #for different sections there are different chainpieces
-        currentString = ['£$'] * currentChaindepth  #start
+        currentString = ['$START$'] * currentChaindepth  #start
         while True:
             nextChoices = currentChain[tuple([
                 currentString[-r] for r in range(1, currentChaindepth + 1)
             ])]  #find next possible words according to previous
             nextWord = nextChoices[random.randrange(
                 len(nextChoices))]  #randomly choose one of the choices
-            if nextWord == '$£':  #end signal
+            if nextWord == '$END$':  #end signal
                 break
             else:
                 currentString.append(nextWord)  #append it to the end

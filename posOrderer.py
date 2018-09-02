@@ -27,9 +27,10 @@ def orderPOS(depths, query, path, bar):
             )  #get nice tags, throw away html artefacts/non-words
             #pad at the start and at the back, to get a start for the chain and an end. Go one too much for type look ahead.
             currentText = [
-                treetaggerwrapper.Tag(word='£$', pos='START', lemma='START')
+                treetaggerwrapper.Tag(
+                    word='$START$', pos='START', lemma='START')
             ] * (depth + 1) + currentText + [
-                treetaggerwrapper.Tag(word='$£', pos='ENDE', lemma='ENDE')
+                treetaggerwrapper.Tag(word='$END$', pos='ENDE', lemma='ENDE')
             ] * 2
             #prepare for nextpos; we now START will be the first part of speech.
             ################nextpos = 'START'

@@ -9,9 +9,9 @@ def mkPOSchain(depths, dicts):
         currentChainDepth = depths[sectionIterator]
         currentChain = dicts[
             sectionIterator]  #for different sections there are different chainpieces
-        currentString = ['£$'] * currentChainDepth  #start
+        currentString = ['$START$'] * currentChainDepth  #start
         #we need a start variable for the chain; it is defined as ['£$', 'START']
-        nextWord = ['£$', 'START']
+        nextWord = ['$START$', 'START']
         while True:
             #find next possible words according to previous and the type for the next word described by the last word.
             nextChoices = currentChain[tuple((tuple(
@@ -20,7 +20,7 @@ def mkPOSchain(depths, dicts):
 
             nextWord = nextChoices[random.randrange(
                 len(nextChoices))]  #randomly choose one of the choices
-            if nextWord[0] == '$£':  #end signal
+            if nextWord[0] == '$END$':  #end signal
                 break
             else:
                 currentString.append(nextWord[0])  #append it to the end
