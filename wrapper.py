@@ -5,14 +5,6 @@ from posOrderer import orderPOS
 from naiveChainer import mkNaiveChain
 from naiveOrderer import orderNaive
 
-query = ''  #fill in your own query
-sectiondepths = [2, 3]  #[title,main]
-
-repetition = 3
-
-#0 is naive, 1 is PoS
-mode = 1
-
 #for better readable code
 POS = 1
 Naive = 0
@@ -47,9 +39,10 @@ def wrapChainPOS(sectiondepths, dicts, repetition):
     result = ''
     #split title and the chains by a linebreak
     for i in range(repetition):
-        result += mkPOSchain(sectiondepths, dicts)[0]
+        results = mkPOSchain(sectiondepths, dicts)
+        result += results[0]
         result += "\n"
-        result += mkPOSchain(sectiondepths, dicts)[1]
+        result += results[1]
         result += "\n"
     return result  #make the chain, returns string
 
@@ -66,8 +59,9 @@ def wrapChainNaive(sectiondepths, dicts, repetition):
     result = ''
     #split title and the chains by a linebreak
     for i in range(repetition):
-        result += mkNaiveChain(sectiondepths, dicts)[0]
+        results = mkNaiveChain(sectiondepths, dicts)
+        result += results[0]
         result += "\n"
-        result += mkNaiveChain(sectiondepths, dicts)[1]
+        result += results[1]
         result += "\n"
     return result  #make the chain, returns string

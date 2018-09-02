@@ -4,8 +4,8 @@ import nltk
 
 
 def orderNaive(depths, query, path, bar):
-    dicts = [dict()] * len(
-        depths
+    dicts = (
+        dict(), dict()
     )  #make dicts to store the possible choices given the previous words
     counter = 0
     allFiles = len(os.listdir(path))  #only used to give a time estimate

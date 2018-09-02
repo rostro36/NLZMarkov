@@ -1,12 +1,12 @@
 from wrapper import wrapGather, wrapChainNaive, wrapChainPOS, wrapOrderPOS, wrapOrderNaive
 
 query = 'quai churchill leinenpflicht initiative'  #fill in your own query
-sectiondepths = [2, 3]  #[title,main]
+sectiondepths = [1, 1]  #[title,main]
 
-repetition = 3
+repetition = 2
 
 #0 is naive, 1 is PoS
-mode = 1
+mode = 0
 
 #for better readable code
 POS = 1
@@ -22,6 +22,7 @@ if (success == Successful):
     #it was successful
     #decide if PoS or naive.
     if mode == POS:
+        print('yeah')
         wrapChainPOS(sectiondepths, wrapOrderPOS(sectiondepths, query, None),
                      repetition)
     elif mode == Naive:

@@ -6,8 +6,8 @@ tagger = treetaggerwrapper.TreeTagger(TAGLANG='de')
 
 
 def orderPOS(depths, query, path, bar):
-    dicts = [dict()] * len(
-        depths
+    dicts = (
+        dict(), dict()
     )  #make dicts to store the possible choices given the previous words
     counter = 0
     allFiles = len(os.listdir(path))  #only used to give a time estimate
@@ -32,16 +32,16 @@ def orderPOS(depths, query, path, bar):
             ] * (depth + 1) + currentText + [
                 treetaggerwrapper.Tag(word='$END$', pos='ENDE', lemma='ENDE')
             ] * 2
-            #prepare for nextpos; we now START will be the first part of speech.
-            ################nextpos = 'START'
             #we dont need to run for the starting £$ and can only go to the first end sequence
-            for currit in range(depth, len(currentText) - 1):
+            for currentIterator in range(depth, len(currentText) - 1):
                 #key consists of the previous words and the next part of speech given the current word.
                 key = tuple((tuple(([
-                    currentText[currit - r].word for r in range(1, depth + 1)
-                ])), currentText[currit].pos))
+                    currentText[currentIterator - r].word
+                    for r in range(1, depth + 1)
+                ])), currentText[currentIterator].pos))
                 #the entry is the current word, the next part of speech.
-                entry = (currentText[currit].word, currentText[currit + 1].pos)
+                entry = (currentText[currentIterator].word,
+                         currentText[currentIterator + 1].pos)
                 if not key in currentDict:  #add them to the choices array
                     currentDict[key] = [entry]
                 else:
