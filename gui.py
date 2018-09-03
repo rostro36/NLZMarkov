@@ -4,9 +4,18 @@
 
 import sys
 import os
-import wrapper
+from gatherer import goGather
+from naiveOrderer import goOrderNaive
+from naiveChainer import goChainNaive
+from posOrderer import goOrderPOS
+from posChainer import goChainPOS
 from PyQt5.QtWidgets import QScrollArea, QComboBox, QVBoxLayout, QHBoxLayout, QProgressBar, QApplication, QWidget, QPushButton, QGridLayout, QTextEdit, QLabel, QLineEdit
 from PyQt5.QtCore import Qt
+
+Successful = 0
+NoResults = 1
+NoArticlesFound = 2
+NoQuery = 3
 
 
 class Feischter(QWidget):
@@ -57,11 +66,13 @@ class Feischter(QWidget):
         subAzau.addWidget(self.azauCombo)
 
         #define the buttons for the different modes
+        subButton = QHBoxLayout()
         naiveButton = QPushButton('Naive', self)
         posButton = QPushButton('PoS', self)
         naiveButton.clicked.connect(self.naiveGo)
         posButton.clicked.connect(self.posGo)
-
+        subButton.addWidget(naiveButton)
+        subButton.addWidget(posButton)
         #define the progressbars
         self.dLoadProgress = QProgressBar(self)
         self.dLoadProgress.setGeometry(30, 40, 280, 25)
@@ -79,8 +90,9 @@ class Feischter(QWidget):
         grid.addLayout(subTitu, 2, 0, 1, 2)
         grid.addLayout(subHoupt, 2, 2, 1, 2)
         grid.addLayout(subAzau, 2, 4, 1, 2)
-        grid.addWidget(naiveButton, 3, 0, 1, 3)
-        grid.addWidget(posButton, 3, 4, 1, 3)
+        grid.addLayout(subButton, 3, 0, 1, 6)
+        # grid.addWidget(naiveButton, 3, 0, 1, 3)
+        # grid.addWidget(posButton, 3, 3, 1, 3)
         grid.addWidget(dLoad, 4, 0)
         grid.addWidget(self.dLoadProgress, 5, 0, 1, 6)
         grid.addWidget(ord, 6, 0)
@@ -107,18 +119,17 @@ class Feischter(QWidget):
         ]
         nomere = int(self.azauCombo.currentText())
         #download the queryword, give progress in progbar
-        success = wrapper.wrapGather(query, self.dLoadProgress)
-        if success == 0:
+        success = goGather(query, self.dLoadProgress)
+        if success == Successful:
             #successful
-            dicts = wrapper.wrapOrderPOS(sectionDepths, query,
-                                         self.orderProgress)
+            dicts = goOrderPOS(sectionDepths, query, self.orderProgress)
             #get the text
-            text = wrapper.wrapChainPOS(sectionDepths, dicts, nomere)
-        elif (success == 1):
+            text = goChainPOS(sectionDepths, dicts, nomere)
+        elif (success == NoResults):
             text = 'There are no results for the query.'
-        elif (success == 2):
+        elif (success == NoArticlesFound):
             text = 'Cant reach articles on net.'
-        elif (success == 3):
+        elif (success == NoQuery):
             text = 'No query word given.'
         #make a widget for the result
         resultWidget = QLabel(text)
@@ -140,18 +151,17 @@ class Feischter(QWidget):
         ]
         nomere = int(self.azauCombo.currentText())
         #download the queryword, give progress in progbar
-        success = wrapper.wrapGather(query, self.dLoadProgress)
-        if success == 0:
+        success = goGather(query, self.dLoadProgress)
+        if success == Successful:
             #successful
-            dicts = wrapper.wrapOrderNaive(sectionDepths, query,
-                                           self.orderProgress)
+            dicts = goOrderNaive(sectionDepths, query, self.orderProgress)
             #get the text
-            text = wrapper.wrapChainNaive(sectionDepths, dicts, nomere)
-        elif (success == 1):
+            text = goChainNaive(sectionDepths, dicts, nomere)
+        elif (success == NoResults):
             text = 'There are no results for the query.'
-        elif (success == 2):
+        elif (success == NoArticlesFound):
             text = 'Cant reach articles on net.'
-        elif (success == 3):
+        elif (success == NoQuery):
             text = 'No query word given.'
         #make a widget for the result
         resultWidget = QLabel(text)

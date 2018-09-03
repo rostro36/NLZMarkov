@@ -14,6 +14,18 @@ NoArticlesFound = 2
 NoQuery = 3
 
 
+def goGather(query, bar):
+    #'' gives a permission error in gather and makes no sense
+    if query != '':
+        path = os.getcwd() + "/" + query + "/"  #save of the articles
+        if not os.path.isdir(path):  #check if articles already fetched
+            return gather(query, path, bar)  #fetch them, store in path
+        else:
+            return Successful
+    else:
+        return NoQuery
+
+
 def gather(query, path, bar):
     http = urllib3.PoolManager()
     URL = 'https://www.luzernerzeitung.ch/suche?form%5Bq%5D=' + up.quote_plus(

@@ -5,6 +5,13 @@ import treetaggerwrapper
 tagger = treetaggerwrapper.TreeTagger(TAGLANG='de')
 
 
+#order query with sectiondepths, get progress in bar
+def goOrderPOS(sectiondepths, query, bar):
+    path = os.getcwd() + "/" + query + "/"
+    return orderPOS(sectiondepths, query, path,
+                    bar)  #order with depths, save in dicts
+
+
 def orderPOS(depths, query, path, bar):
     dicts = (
         dict(), dict()

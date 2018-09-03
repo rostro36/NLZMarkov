@@ -3,6 +3,13 @@ import re
 import nltk
 
 
+#order query with sectiondepths, get progress in bar
+def goOrderNaive(sectiondepths, query, bar):
+    path = os.getcwd() + "/" + query + "/"
+    return orderNaive(sectiondepths, query, path,
+                      bar)  #order with depths, save in dicts
+
+
 def orderNaive(depths, query, path, bar):
     dicts = (
         dict(), dict()

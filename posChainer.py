@@ -1,6 +1,19 @@
 import random
 
 
+#makes repetition-many chains with the sectiondepths,
+def goChainPOS(sectiondepths, dicts, repetition):
+    result = ''
+    #split title and the chains by a linebreak
+    for i in range(repetition):
+        results = mkPOSchain(sectiondepths, dicts)
+        result += results[0]
+        result += "\n"
+        result += results[1]
+        result += "\n"
+    return result  #make the chain, returns string
+
+
 def mkPOSchain(depths, dicts):
     sectionLists = []
     for sectionIterator in range(
