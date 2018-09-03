@@ -1,4 +1,3 @@
-#from wrapper import wrapGather, wrapChainNaive, wrapChainPOS, wrapOrderPOS, wrapOrderNaive
 from gatherer import goGather
 from naiveOrderer import goOrderNaive
 from naiveChainer import goChainNaive

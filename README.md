@@ -10,7 +10,12 @@ Markov chain based on articles of the "Neue Luzerner Zeitung".
 
 ### What possible to make better:
 * the gui is not robust, because it doesn't use multithreading
-* make custom errors for not being able to gather data.
+* split the methods better, such that a module doesn't consist of just one method.
+
+### What to do better next time:
+* better names from the start.
+* more methods.
+* methods verbs, modules nouns.
 
 ### Used libraries:
 * PyQt5

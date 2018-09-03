@@ -91,8 +91,6 @@ class Feischter(QWidget):
         grid.addLayout(subHoupt, 2, 2, 1, 2)
         grid.addLayout(subAzau, 2, 4, 1, 2)
         grid.addLayout(subButton, 3, 0, 1, 6)
-        # grid.addWidget(naiveButton, 3, 0, 1, 3)
-        # grid.addWidget(posButton, 3, 3, 1, 3)
         grid.addWidget(dLoad, 4, 0)
         grid.addWidget(self.dLoadProgress, 5, 0, 1, 6)
         grid.addWidget(ord, 6, 0)

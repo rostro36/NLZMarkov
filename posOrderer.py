@@ -21,7 +21,6 @@ def orderPOS(depths, query, path, bar):
     for file in os.listdir(path):  #open each file exactly once
         f = open(path + file, 'r', encoding="utf-8")
         fileText = f.read()
-        #fileText=bytes(fileText,'utf-8').decode('cp1252')
         fileText = re.split("\n", fileText)  #sections are split by linebreaks
         for sectionsIterator in range(len(depths)):  #go through sections
             depth = depths[
@@ -39,7 +38,7 @@ def orderPOS(depths, query, path, bar):
             ] * (depth + 1) + currentText + [
                 treetaggerwrapper.Tag(word='$END$', pos='ENDE', lemma='ENDE')
             ] * 2
-            #we dont need to run for the starting £$ and can only go to the first end sequence
+            #we dont need to run for the starting $START$ and can only go to the first end sequence
             for currentIterator in range(depth, len(currentText) - 1):
                 #key consists of the previous words and the next part of speech given the current word.
                 key = tuple((tuple(([
